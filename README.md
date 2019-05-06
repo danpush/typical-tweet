@@ -1,5 +1,5 @@
 # Currently Work-in-progress
-Twitter bot that gets the most trending topic, and makes a tweet about it based on others tweets it's read. Loosely based on the Hhidden Markov Model.
+Twitter bot that gets the most trending topic, and makes a tweet about it based on others tweets it's read. Loosely based on the Hidden Markov Model.
 
 
 Sometimes live at: https://twitter.com/PossiblyAndroid
