@@ -2,29 +2,22 @@ from random import randint
 
 
 def choose_random_word(d: dict) -> str:
-    """Return a random word from a given dictionary <d> where the sum of all the
-    values of <d> are <size>, and the probability of choosing a certain word is
-    the value of <d>/<size>
+    """Return a random word from a given dictionary <d> where the odds of
+    picking any word is the value of <d> at word over the sum off all values.
+    ( P(word) = d[word] / sum(d.values()) )
 
-    >>> d = {'hello': 1, 'world': 1, 'pineapple': 3}
+    >>> d = {'hello': 1, 'world': 2, 'pineapple': 1}
     >>> choose_random_word(d) in ['hello', 'world', 'pineapple']
     True
     """
-    size = 0
-    for word in d:
-        size += d[word]
+    size = sum(d.values())
 
-    r = randint(1, size)
+    r = randint(0, size)
     total = 0
-    chosen_word = list(d.keys())[0]
-    for word in d:
-        if total <= r < total + d[word]:
-            chosen_word = word
-            break
-        else:
-            total += d[word]
-
-    return chosen_word
+    for word, val in d.items():
+        total += val
+        if r <= total:
+            return word
 
 
 def create_sentence(first_words: dict, follower_words: dict) -> str:
@@ -35,16 +28,11 @@ def create_sentence(first_words: dict, follower_words: dict) -> str:
     >>> create_sentence(first_words, follower_words)
     'Hello #world'
     """
-    words_for_sentence = []
     new_word = choose_random_word(first_words)
+    sentence = ''
 
     while new_word is not None:
-        words_for_sentence.append(new_word)
+        sentence += new_word + ' '
         new_word = choose_random_word(follower_words[new_word])
 
-    sentence = ''
-    for word in words_for_sentence:
-        sentence += word + ' '
-
-    return sentence[:-1].capitalize()
-
+    return sentence[:-1].capitalize()       # Remove extra space and capitalize
