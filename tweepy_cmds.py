@@ -10,27 +10,10 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
 
-def get_trending_tag(woeid: int) -> str:
-    """Return the most popular hashtag in <woeid> (Yahoo! Where On Earth ID), 1
-    is global, USA is 23424977
-
-    Requirement: There exists at least one trending hashtag
-
-    >>> get_trending_tag(1)
+def get_trending(woeid: int) -> dict:
+    """Return the most popular trending topic in <woeid> (Yahoo! Where On Earth
+    ID), global/world-wide is 1, USA is 23424977
     """
-    data = api.trends_place(woeid)  # get trending topics
-
-    trends = data[0]['trends']
-
-    # find most popular hashtag (instead of most popular trend)
-    index = 0
-    while index < len(trends) and trends[index]['name'][0] != '#':
-        index += 1
-
-    return trends[index]
-
-
-def get_trending(woeid: int) -> str:
     data = api.trends_place(woeid)  # get trending topics
     trends = data[0]['trends']
     return trends[0]
