@@ -1,6 +1,7 @@
-from tweepy_cmds import get_trending_tag, get_list_of_tweets, post_tweet, get_trending
-from create_sentence import create_sentence, choose_random_word
+from tweepy_cmds import get_list_of_tweets, post_tweet, get_trending
+from create_sentence import create_sentence
 import time
+
 
 def tweets_to_dictionaries(tweets: list) -> tuple:
     """Given a list of tweets, return a tuple of:
@@ -18,32 +19,33 @@ def tweets_to_dictionaries(tweets: list) -> tuple:
     >>> follower_words
     {'hello': {'#world': 1}, '#world': {None: 2}, 'our': {'#world': 1}}
     """
-    first_words = {}  # Dictionary where key is word and value is number of times it was used
-    follower_words = {}  # Dictionary where key is word, and value is dictionary where key is word and value is number of times it was used
+    first_words = {}
+    follower_words = {}
     for tweet in tweets:
-        words = tweet.split()
-        if words[0] not in first_words:
-            first_words[words[0]] = 1
-        else:
-            first_words[words[0]] += 1
+        if tweet != '':     # For some reason it's possible to get a tweet of ''
+            words = tweet.split()
+            if words[0] not in first_words:
+                first_words[words[0]] = 1
+            else:
+                first_words[words[0]] += 1
 
-        for i in range(len(words) - 1):
+            for i in range(len(words) - 1):
 
-            if words[i] not in follower_words:
-                follower_words[words[i]] = {words[i + 1]: 1}
-            else:  # words[i] is in next_word
-                if words[i + 1] not in follower_words[words[i]]:
-                    follower_words[words[i]][words[i + 1]] = 1
-                else:
-                    follower_words[words[i]][words[i + 1]] += 1
+                if words[i] not in follower_words:
+                    follower_words[words[i]] = {words[i + 1]: 1}
+                else:  # words[i] is in next_word
+                    if words[i + 1] not in follower_words[words[i]]:
+                        follower_words[words[i]][words[i + 1]] = 1
+                    else:
+                        follower_words[words[i]][words[i + 1]] += 1
 
-        # last word:
-        if words[-1] not in follower_words:
-            follower_words[words[-1]] = {None: 1}
-        elif None not in follower_words[words[-1]]:
-            follower_words[words[-1]][None] = 1
-        else:
-            follower_words[words[-1]][None] += 1
+            # last word:
+            if words[-1] not in follower_words:
+                follower_words[words[-1]] = {None: 1}
+            elif None not in follower_words[words[-1]]:
+                follower_words[words[-1]][None] = 1
+            else:
+                follower_words[words[-1]][None] += 1
 
     return first_words, follower_words,
 
@@ -85,31 +87,33 @@ def main():
     query = trending_tag['query']
 
     print("Trending tag: " + hashtag)
-    # hashtag = '#myfirstTweet'
-    # query = 'myfirstTweet'
 
-    tweets = get_list_of_tweets(query, 100, 15)
+    tweets = get_list_of_tweets(query, 100, 25)
     tweets = reformat_tweets(tweets)
 
     first_words, follower_words = tweets_to_dictionaries(tweets)
 
     print("Unique words:", len(follower_words))
 
+    sentence = ''
     condition = False
     while not condition:
         sentence = create_sentence(first_words, follower_words)
         if hashtag.lower() not in sentence:
             sentence += ' ' + hashtag
         condition = (len(sentence) <= 280)
+
     print(sentence)
+
     post_tweet(sentence)
 
-    # Following line is included if you want this to run every hour.
-    # time.sleep(60*60)
+
+def run_every(t: int) -> None:
+    while True:
+        main()
+        time.sleep(t)
 
 
 if __name__ == '__main__':
-    main()
-    import doctest
-    # doctest.testmod()
-    # tweet("tweepy api test")
+    # main()
+    run_every(60 * 60 * 4)
