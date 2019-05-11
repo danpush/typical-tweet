@@ -16,7 +16,7 @@ $ pip3 install tweepy
 ```
 
 You will need a Twitter App with Keys/Secrets. You can make an App at https://developer.twitter.com/en/apply-for-access
-You need just the CONSUMER_KEY and CONSUMER_SECRET to get create tweets, but if you want to post them as well you will need the ACCESS_KEY and ACCESS_SECRET.
+You need just the CONSUMER_KEY and CONSUMER_SECRET to get tweets, but if you want to post them as well you will need the ACCESS_KEY and ACCESS_SECRET.
 
 ### Running locally
 Clone this repository onto your computer or download the contents as a zip file. Go into tweepy_cmds.py and replace CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, and ACCESS_SECRET with your own Keys/Secrets. If you aren't intending on posting any tweets, feel free to leave ACCESS_KEY and ACCESS_SECRET as is, but comment out line 9.
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 ```
 
 ### Deployment
-You can run this on a Raspberry Pi, any VM, or on your computer with nohup.
+You can run this on a Raspberry Pi, any VM, or on your computer using nohup.
 ```
 $ nohup python3 main.py &
 ```
