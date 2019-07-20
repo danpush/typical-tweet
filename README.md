@@ -1,5 +1,5 @@
 # Typical Tweet
-This is a Twitter bot that gets the most trending topic, and makes a tweet about it based on others tweets it's read. Currently running on Google Cloud's Compute Engine f1-micro, but should work on a Raspberry Pi. Loosely based on the Hidden Markov Model.
+This is a Twitter bot that gets the most trending topic, and makes a tweet about it based on others tweets it's read. Currently running on Google Cloud's Compute Engine f1-micro, but should work on a Raspberry Pi.
 
 You can find an example of this bot (usually) live at: https://twitter.com/PossiblyAndroid
 
