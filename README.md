@@ -1,7 +1,7 @@
 # Typical Tweet
 This is a Twitter bot that gets the most trending topic, and makes a tweet about it based on others tweets it's read. Currently running on Google Cloud's Compute Engine f1-micro, but should work on a Raspberry Pi.
 
-You can find an example of this bot (usually) live at: https://twitter.com/PossiblyAndroid
+I've stopped this bot (at least for now), but you can see an archive of it's tweets here: https://twitter.com/PossiblyAndroid
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
